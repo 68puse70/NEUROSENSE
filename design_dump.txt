@@ -1,0 +1,173 @@
+NEUROSENSE
+Design Document
+UI/UX, Interaction Patterns & Visual System
+Version 1.0  |  9 October 2026  |  Companion to the Dashboard PRD
+A practical design blueprint for the NeuroSense sensor-monitoring\nweb application and its live data workflows.
+1. Design Intent
+NeuroSense should feel like a focused engineering instrument: precise, calm, responsive, and easy to read while testing hardware. The interface should make the most important information—sensor readings, device health, and recording state—visible immediately. It should look modern and technical without sacrificing clarity for decoration.
+2. Brand & Visual Direction
+Recommended direction: “Precision Lab”. Use a deep navy background, slightly lighter panels, cool white text, and a restrained teal accent. Reserve status colours for actual system states. The result should feel suitable for a hardware prototype and future sensor analytics—not like a consumer fitness app.
+Colour values are starting tokens, not a substitute for contrast testing. Do not use accent or status colour as the only indicator; pair it with text or an icon.
+3. Typography, Spacing & Shape
+4. Application Shell & Navigation
+Desktop: a fixed-width left sidebar, a slim top header, and a scrollable main workspace. On small screens, collapse the sidebar into a menu or bottom navigation without hiding recording status.
+4.1 Desktop layout sketch
+┌──────────────────┬──────────────────────────────────────────────────┐
+│ NEUROSENSE       │ Dashboard             [SIMULATED] [● Connected]  │
+│                  ├──────────────────────────────────────────────────┤
+│  Dashboard       │ System overview                                    │
+│  Live Monitor    │ [Device status] [Sensors active] [Recording]      │
+│  Sessions        │                                                    │
+│  Calibration     │ [FSR 1] [FSR 2] [FSR 3] [Flex 1] [Flex 2]         │
+│  Settings        │                                                    │
+│                  │ [Live time-series chart              ]             │
+│                  │ [Recent sessions / recent events     ]             │
+└──────────────────┴──────────────────────────────────────────────────┘
+Sketch is structural only. Exact sensor cards and columns should adapt to the configured sensor count.
+5. Page-by-Page Design
+5.1 Dashboard overview
+Purpose: answer “Is the system working, what are the sensors reading, and am I recording?” within a few seconds.
+Top row: device connection, data source, active sensor count, and recording state.
+Sensor grid: one card per configured sensor with sensor name/ID, latest value, unit or “raw ADC”, optional normalized percentage, and freshness/status.
+Live chart: selectable sensors, visible time window, pause/resume display, and clear legend. Avoid plotting incompatible units on the same axis unless the chart clearly communicates separate scales.
+Recording controls: Start, Stop, session name, and optional notes. Show a clear active-recording indicator and elapsed duration.
+Recent sessions: a compact list of recent recordings with a link to full history.
+Empty state: explain how to enable simulation or connect a device; never show fabricated zero values as if they were real.
+5.2 Live Monitor
+Designed for debugging rather than presentation.
+Show raw, filtered, and normalized readings only when each value is available.
+Include last update time, sensor ID, configured type, and status.
+Use compact sensor rows or cards; let the user select which sensors appear in the chart.
+Stale values remain visible for debugging but are visibly marked stale.
+5.3 Sessions / History
+Use a searchable or filterable table/list with session name, date, duration, source, sample count, and actions.
+Opening a session shows metadata, charts, summary statistics, notes, and export controls.
+CSV export is a clear secondary action; deletion is separated and requires confirmation.
+Differentiate an unfinished/interrupted session from a successfully completed recording if the backend can detect it.
+5.4 Calibration
+Use a step-by-step flow: choose sensor → capture baseline/reference → preview mapping → save.
+Display the current live reading beside the capture action so users can see whether the sensor is responding.
+Explain the expected physical action in plain language, e.g. “Leave the sensor relaxed, then capture baseline.”
+Show the current saved calibration and when it was last updated.
+Provide Cancel and Reset actions; confirm before overwriting calibration.
+Do not imply that a simple min/max mapping is a scientifically validated pressure or bend measurement.
+5.5 Settings
+Group settings by Device Connection, Sensor Configuration, Display, and Data.
+Show a connection test result with an explanation and timestamp.
+Use stable sensor IDs internally; renaming a sensor should not break old session data.
+Clearly show whether changes apply immediately or require reconnect/restart.
+6. Key Interaction Patterns
+7. Component Inventory
+8. Responsive Behaviour
+9. Accessibility & Readability
+Maintain WCAG-aware text contrast, especially for muted metadata and status labels.
+Use keyboard-accessible controls and visible focus indicators.
+Provide accessible names for icon-only controls and chart toggles.
+Do not communicate state by colour alone; include labels such as “Stale” or “Disconnected”.
+Respect reduced-motion preferences; live charts should not use unnecessary animations.
+Use sufficiently large touch targets on mobile and avoid dense controls next to destructive actions.
+10. Charts & Data Visualisation Rules
+Show units or explicitly label values as raw ADC / normalized percentage.
+Display the selected time range and keep time formatting consistent.
+Use stable colours per sensor within a chart session and a visible legend.
+Do not smooth or interpolate missing readings in a way that implies measurements were received.
+If chart display is downsampled for performance, preserve the original stored readings for export.
+Provide a way to pause visual updates without silently stopping recording.
+Show gaps or stale periods where practical rather than drawing a misleading continuous line.
+11. Example Screen Content
+12. Implementation Notes for Design-to-Code
+Build reusable components rather than separate one-off cards for each sensor.
+Drive the UI from sensor configuration so adding/removing a sensor does not require redesigning the page.
+Keep display state (selected chart sensors, chart window) separate from recording/storage state.
+Use a shared connection-state model so all pages display consistent status.
+Build simulation mode through the same reading interface used by hardware data.
+Keep visualisation components independent from the ESP32 protocol and database implementation.
+Add loading, error, empty, stale, and disconnected states before calling a screen complete.
+13. Design Review Checklist
+Can a user identify simulated versus hardware data immediately?
+Can a user tell if the sensor stream is stale or disconnected?
+Can a user start and stop a session without ambiguity?
+Are raw and normalized readings clearly differentiated?
+Can saved sessions be found, reopened, and exported?
+Do screens work with a different number of sensors?
+Are empty/error/loading states designed, not left blank?
+Can core workflows be completed using a keyboard and on mobile?
+Does every critical action provide appropriate confirmation or feedback?
+14. Decisions to Confirm
+End of Document
+Design principle | How it applies
+Signal over decoration | Prioritize readings, charts, timestamps, and device state over large illustrations or ornamental effects.
+Clear state at all times | Users can tell whether the source is simulated or hardware, whether data is fresh, and whether a recording is active.
+Consistent visual grammar | Use the same patterns for sensor cards, statuses, chart controls, and actions throughout the app.
+Progressive disclosure | Keep the overview simple; put raw diagnostics, detailed summaries, and calibration controls on their own pages.
+Trustworthy data presentation | Show units, time ranges, missing data, and raw-versus-derived values explicitly.
+Responsive by default | The core monitoring and recording tasks remain usable on laptop, tablet, and mobile widths.
+Token | Suggested value | Usage
+App background | #0B1220 | Main page background
+Sidebar / navigation | #101A2B | Persistent navigation surface
+Panel surface | #141F31 | Cards, chart panels, dialogs
+Raised surface | #1B2A40 | Hover/selected states and nested panels
+Primary text | #F3F6FA | Headings and primary values
+Secondary text | #A5B2C5 | Labels, descriptions, timestamps
+Accent teal | #35D0C1 | Primary action, selected navigation, chart focus
+Success | #43C98B | Connected, recording saved, healthy data
+Warning | #F4B860 | Stale data, calibration attention, nearing limits
+Error | #F07178 | Disconnected, failed operation, invalid input
+Borders | #29384D | Panel boundaries and separators
+Element | Guideline
+Font family | Use Inter if available, with a system sans-serif fallback.
+Page title | 24–30 px, semibold; one clear title per page.
+Section title | 15–18 px, semibold.
+Sensor value | 28–36 px on overview cards; use tabular numerals where possible.
+Body text | 14–16 px for primary UI copy.
+Metadata | 12–13 px; maintain readable contrast.
+Spacing scale | 4, 8, 12, 16, 24, 32 px; use consistently.
+Corner radius | 8–12 px for cards and inputs; 8 px for buttons.
+Borders/shadows | Prefer subtle borders; use shadows sparingly.
+Icons | Use one consistent outline icon family. Always label critical controls.
+Region | Contents | Behaviour
+Left sidebar | NeuroSense wordmark; Dashboard, Live Monitor, Sessions, Calibration, Settings | Current page has a visible selected state; icons accompany text labels.
+Top header | Page title/breadcrumb, source mode chip, device connection state | Connection state remains visible across main pages.
+Main content | Page-specific cards, charts, tables, and controls | Use a consistent content grid and align panel edges.
+Global status area | Simulated/Hardware label, Connected/Stale/Disconnected, recording indicator | Persistent and readable; not conveyed by colour alone.
+Pattern | Design rule
+Primary action | One visually prominent action per panel, such as Start Recording or Save Calibration.
+Destructive action | Use a confirmation step and state exactly what will be deleted or reset.
+Connection status | Use text + icon + colour, with last-seen time when disconnected or stale.
+Recording state | Show “Recording” and elapsed duration; prevent accidental double-starts.
+Chart selection | Sensor toggles update the chart immediately and keep the legend in sync.
+Loading state | Use a lightweight skeleton or spinner with context, not a blank panel.
+Error state | Explain what failed, likely cause if known, and the next action.
+Success feedback | Confirm saved session/export/calibration without blocking the workflow.
+Units and labels | Never make users infer whether a number is raw ADC, normalized %, or another unit.
+Component | Required variants / states
+Sensor card | Normal, selected, stale, unavailable, warning; raw and normalized value slots
+Status chip | Connected, Stale, Disconnected, Simulated, Hardware, Recording, Saved, Error
+Chart panel | Loading, live, paused, no data, partial data, error
+Session row | Completed, active, interrupted, selected
+Recording control | Idle, recording, stopping, error
+Calibration step | Not started, capturing, ready to save, saved, failed
+Notification/toast | Success, warning, error, informational
+Dialog | Confirm delete, confirm reset, unsaved changes
+Empty state | No device, no sessions, no sensor configuration, no readings
+Viewport | Layout rules
+Desktop ≥ 1200 px | Expanded sidebar; 3–5 sensor cards per row as space allows; chart and summary panels can share a row.
+Tablet 768–1199 px | Narrow/collapsible sidebar; 2–3 sensor cards per row; stack secondary panels as needed.
+Mobile < 768 px | Collapsed navigation; 1–2 cards per row; chart scroll/controls remain usable; session table becomes cards or horizontally scrollable.
+All sizes | Keep primary reading, source mode, connection state, and recording controls easy to find.
+UI element | Example content | Notes
+Source chip | SIMULATED DATA | Visible while using generated data
+Connection | Device disconnected · Last update 12 s ago | Never label stale data as live
+Sensor card | FSR 1 · Raw 1847 · Normalized 68% | Illustrative values only
+Recording action | Start recording | After start: Recording · 00:42 · Stop
+Session row | Grip Test A · 04:32 · 13,600 samples | Duration/sample count depend on actual rate
+Calibration | Baseline captured · Reference pending | State should reflect actual workflow
+Decision | Current proposal
+Product name | NeuroSense (confirm final spelling/branding)
+Theme | Dark “Precision Lab” theme with teal accent
+Logo | Wordmark first; custom icon can be designed later
+Sensor mapping | Configurable; exact count and finger mapping remain open
+Chart library | Choose during frontend implementation based on React needs
+Hand visualisation | Optional V1 enhancement after mapping is verified
+Mobile priority | Responsive browser support, not a native app
+Cloud support | Out of scope for V1; local-first data handling

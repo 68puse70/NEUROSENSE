@@ -1,0 +1,113 @@
+src/components/dashboard/HandVisualization.tsx(25,25): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Icons'.
+  No index signature with a parameter of type 'string' was found on type 'Icons'.
+src/components/dashboard/LiveTelemetryChart.tsx(61,25): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Icons'.
+  No index signature with a parameter of type 'string' was found on type 'Icons'.
+src/components/dashboard/LiveTelemetryChart.tsx(159,18): error TS2304: Cannot find name 'Play'.
+src/components/dashboard/LiveTelemetryChart.tsx(163,18): error TS2552: Cannot find name 'Pause'. Did you mean 'onpause'?
+src/components/dashboard/LiveTelemetryChart.tsx(236,20): error TS2304: Cannot find name 'Eye'.
+src/components/dashboard/LiveTelemetryChart.tsx(238,20): error TS2304: Cannot find name 'EyeOff'.
+src/components/dashboard/LiveTelemetryChart.tsx(261,14): error TS2552: Cannot find name 'Pause'. Did you mean 'onpause'?
+src/components/dashboard/LiveTelemetryChart.tsx(267,14): error TS2304: Cannot find name 'AlertCircle'.
+src/components/dashboard/LiveTelemetryChart.tsx(271,12): error TS2304: Cannot find name 'ResponsiveContainer'.
+src/components/dashboard/LiveTelemetryChart.tsx(272,14): error TS2304: Cannot find name 'LineChart'.
+src/components/dashboard/LiveTelemetryChart.tsx(273,16): error TS2304: Cannot find name 'CartesianGrid'.
+src/components/dashboard/LiveTelemetryChart.tsx(274,16): error TS2304: Cannot find name 'XAxis'.
+src/components/dashboard/LiveTelemetryChart.tsx(281,16): error TS2304: Cannot find name 'YAxis'.
+src/components/dashboard/LiveTelemetryChart.tsx(289,16): error TS2304: Cannot find name 'Tooltip'.
+src/components/dashboard/LiveTelemetryChart.tsx(302,20): error TS2304: Cannot find name 'Line'.
+src/components/dashboard/LiveTelemetryChart.tsx(314,15): error TS2304: Cannot find name 'LineChart'.
+src/components/dashboard/LiveTelemetryChart.tsx(315,13): error TS2304: Cannot find name 'ResponsiveContainer'.
+src/components/dashboard/LiveTelemetryChart.tsx(318,14): error TS2304: Cannot find name 'RefreshCw'.
+src/components/dashboard/MetricsOverview.tsx(60,25): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Icons'.
+  No index signature with a parameter of type 'string' was found on type 'Icons'.
+src/components/dashboard/MetricsOverview.tsx(144,12): error TS2304: Cannot find name 'Flame'.
+src/components/dashboard/SensorCardGrid.tsx(72,25): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Icons'.
+  No index signature with a parameter of type 'string' was found on type 'Icons'.
+src/components/layout/Header.tsx(184,62): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(185,69): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(186,73): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(204,27): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(213,26): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(237,28): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(242,27): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(254,25): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(265,25): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(275,27): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(289,26): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(293,25): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Header.tsx(302,34): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Sidebar.tsx(148,24): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Sidebar.tsx(181,23): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Sidebar.tsx(193,28): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Sidebar.tsx(203,26): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Sidebar.tsx(210,38): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/components/layout/Sidebar.tsx(215,40): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/pages/CalibrationPage.tsx(68,5): error TS2353: Object literal may only specify known properties, and 'history' does not exist in type 'Icons'.
+src/pages/CalibrationPage.tsx(108,25): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Icons'.
+  No index signature with a parameter of type 'string' was found on type 'Icons'.
+src/pages/CalibrationPage.tsx(428,18): error TS2304: Cannot find name 'Target'.
+src/pages/CalibrationPage.tsx(607,17): error TS2607: JSX element class does not support attributes because it does not have a 'props' property.
+src/pages/CalibrationPage.tsx(607,18): error TS2786: 'History' cannot be used as a JSX component.
+  Its type '{ new (): History; prototype: History; }' is not a valid JSX element type.
+    Type '{ new (): History; prototype: History; }' is not assignable to type 'new (props: any, context: any) => Component<any, any, any>'.
+      Type 'History' is missing the following properties from type 'Component<any, any, any>': context, setState, forceUpdate, render, props
+src/pages/LiveMonitorPage.tsx(69,25): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Icons'.
+  No index signature with a parameter of type 'string' was found on type 'Icons'.
+src/pages/LiveMonitorPage.tsx(150,14): error TS2304: Cannot find name 'ResponsiveContainer'.
+src/pages/LiveMonitorPage.tsx(151,16): error TS2304: Cannot find name 'LineChart'.
+src/pages/LiveMonitorPage.tsx(152,18): error TS2304: Cannot find name 'CartesianGrid'.
+src/pages/LiveMonitorPage.tsx(153,18): error TS2304: Cannot find name 'XAxis'.
+src/pages/LiveMonitorPage.tsx(154,18): error TS2304: Cannot find name 'YAxis'.
+src/pages/LiveMonitorPage.tsx(155,18): error TS2304: Cannot find name 'Tooltip'.
+src/pages/LiveMonitorPage.tsx(165,18): error TS2304: Cannot find name 'Line'.
+src/pages/LiveMonitorPage.tsx(175,18): error TS2304: Cannot find name 'Line'.
+src/pages/LiveMonitorPage.tsx(184,17): error TS2304: Cannot find name 'LineChart'.
+src/pages/LiveMonitorPage.tsx(185,15): error TS2304: Cannot find name 'ResponsiveContainer'.
+src/pages/LiveMonitorPage.tsx(290,42): error TS2322: Type '{ name: string; className: string; }' is not assignable to type 'IntrinsicAttributes & { name: string; size?: number | undefined; color?: string | undefined; }'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & { name: string; size?: number | undefined; color?: string | undefined; }'.
+src/pages/SessionsPage.tsx(59,5): error TS2353: Object literal may only specify known properties, and 'search' does not exist in type 'Icons'.
+src/pages/SessionsPage.tsx(76,9): error TS2339: Property 'triangle' does not exist on type 'JSX.IntrinsicElements'.
+src/pages/SessionsPage.tsx(76,52): error TS2339: Property 'triangle' does not exist on type 'JSX.IntrinsicElements'.
+src/pages/SessionsPage.tsx(114,25): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Icons'.
+  No index signature with a parameter of type 'string' was found on type 'Icons'.
+src/pages/SessionsPage.tsx(121,54): error TS2304: Cannot find name 'SessionRecord'.
+src/pages/SessionsPage.tsx(136,47): error TS2304: Cannot find name 'SessionRecord'.
+src/pages/SessionsPage.tsx(235,24): error TS2304: Cannot find name 'Trash2'.
+src/pages/SessionsPage.tsx(265,16): error TS2304: Cannot find name 'RefreshCwIcon'.
+src/pages/SessionsPage.tsx(286,20): error TS2304: Cannot find name 'Download'.
+src/pages/SessionsPage.tsx(328,37): error TS2304: Cannot find name 'Pause'.
+src/pages/SessionsPage.tsx(328,69): error TS2304: Cannot find name 'Play'.
+src/pages/SessionsPage.tsx(388,16): error TS2304: Cannot find name 'Trash2'.
+src/pages/SettingsPage.tsx(113,27): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/pages/SettingsPage.tsx(125,28): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/pages/SettingsPage.tsx(134,28): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/pages/SettingsPage.tsx(143,27): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/pages/SettingsPage.tsx(217,24): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/pages/SettingsPage.tsx(253,22): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+src/pages/SettingsPage.tsx(290,23): error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.

@@ -1,0 +1,184 @@
+NEUROSENSE
+Product Requirements\nDocument
+Sensor Monitoring & Session Analytics Web Application
+Version 1.0  |  9 October 2026  |  Status: Draft
+A local-first web dashboard for live sensor monitoring, calibration,\nsession recording, and future-ready data analysis.
+1. Document Overview
+This PRD defines the first version of NeuroSense, a browser-based dashboard for viewing, recording, and reviewing data from a sensor-equipped prototype. The initial setup is expected to use an ESP32 with FSR and flex sensors. The application should be developed with simulated data first, then connected to the real device when firmware output is ready.
+2. Problem Statement
+Raw sensor readings are difficult to interpret when they are only available in a serial monitor. The team needs one interface that can show live readings, highlight connectivity problems, help calibrate sensors, and save sessions for later review. A web app provides a flexible interface without requiring a separate desktop application.
+3. Product Goals
+Display live sensor readings and connection status in a clear, responsive interface.
+Plot sensor values over time to make changes and anomalies easier to observe.
+Allow users to start, stop, name, save, and review recording sessions.
+Persist time-series readings and session summaries locally.
+Provide a guided calibration workflow and store calibration settings.
+Start with simulated sensor data and later switch to ESP32 data with minimal UI changes.
+Keep the architecture extensible for future sensors and ML-based analysis without promising those features in V1.
+4. Non-Goals for V1
+A native Android/iOS application; the web interface should work on mobile browsers.
+Cloud accounts, multi-user permissions, remote access over the public internet, or cloud synchronization.
+Medical diagnosis, clinical monitoring, or claims that readings represent validated physiological measurements.
+Automatic gesture classification or AI predictions.
+Advanced analytics, multi-device fleet management, or production-grade deployment.
+5. Target Users & Core Use Cases
+6. Scope & Priority
+7. Information Architecture
+8. Functional Requirements
+8.1 Live dashboard and sensor monitor
+Display one card per configured sensor, using a stable sensor ID and editable display name.
+Show the latest value, last-update time, and a clear status such as Connected, Stale, or Unavailable.
+Where firmware supports it, show raw ADC reading separately from filtered and normalized values; never imply a derived value exists when it does not.
+Render a time-series chart with selectable sensors and a readable time axis.
+Show device connection status and distinguish “no device”, “connected but stale”, and “receiving data”.
+Use simulated data mode as a visible, explicit mode so test readings cannot be mistaken for real hardware data.
+8.2 Recording and storage
+Provide Start Recording and Stop Recording controls with clear state feedback.
+Allow an optional session name and notes; generate a unique session ID automatically.
+Store each reading with a timestamp, session ID, and sensor values (or a consistent per-sensor record model).
+Store session metadata including start/end time, duration, sample count, sensor configuration, and whether the source was simulated or hardware.
+Save data incrementally so a browser refresh or temporary UI issue does not discard the entire active recording.
+Warn before destructive actions such as deleting a saved session.
+Allow a saved session to be opened later and its data exported as CSV.
+8.3 Calibration
+Allow a user to select a sensor and capture a baseline/reference reading.
+Support a minimum/maximum or baseline/reference range where appropriate for the sensor type.
+Preview the resulting normalized value before saving calibration.
+Store calibration settings with a version or timestamp and associate the settings used with recorded sessions.
+Clearly label calibration as prototype calibration, not medical calibration.
+8.4 History and analytics
+List sessions newest-first with name, timestamp, duration, sample count, and data source.
+Provide empty, loading, and error states.
+Show per-session minimum, maximum, mean, and sample count where calculation is meaningful.
+Allow CSV export with headers, timestamps, and stable sensor identifiers.
+Keep chart axes and units consistent and indicate missing samples or gaps where practical.
+8.5 Settings
+Allow configuration of device endpoint or connection method.
+Allow sensor labels and mapping to physical sensors to be edited.
+Show current application mode: simulated or hardware.
+Provide a way to view the active sensor schema and calibration values.
+Avoid exposing secrets; the initial local prototype should not require user credentials.
+9. Proposed Technical Architecture
+Recommended initial stack: React + Vite for the frontend, Tailwind CSS for styling, Python FastAPI for the backend, WebSocket for live updates, and SQLite for local persistence. These are proposed choices rather than fixed requirements.
+9.1 Data flow
+ESP32 → local network/device adapter → FastAPI → (a) WebSocket updates to the browser and (b) timestamped persistence in SQLite. The browser should not write directly to SQLite. Simulated readings should use the same internal data format as hardware readings.
+9.2 Suggested API contract (initial proposal)
+Endpoint names are illustrative and may be revised during implementation. The ESP32 payload format, sampling rate, sensor count, and connection protocol must be confirmed with the firmware before integration.
+10. Data Model
+For efficient charting and export, implementation may store readings in a wide format (one row per timestamp with sensor columns) or a normalized format (one row per sensor per timestamp). Choose one deliberately, document it, and ensure CSV exports are easy to analyse.
+11. UX / Visual Design Requirements
+Use a clean, technical interface with a dark theme as the default design direction and a restrained teal accent.
+Keep the main dashboard readable at laptop resolution and usable on mobile browsers.
+Use status text/icons as well as colour; colour alone must not convey connection or alert state.
+Prioritize live values, recording controls, and connection health above decorative visuals.
+Show loading, no-data, disconnected, stale-data, and error states explicitly.
+Keep the hand visualisation optional until sensor-to-finger mapping is confirmed.
+12. Non-Functional Requirements
+13. Acceptance Criteria
+With simulated mode enabled, the dashboard displays changing values for all configured sensors.
+The UI clearly indicates whether data is simulated, live, stale, or unavailable.
+A user can start a named session, observe live readings, stop it, and find it in session history.
+Recorded readings survive a page refresh and backend restart under normal local operation.
+A user can open a past session and see its recorded time-series chart.
+A user can export a session to CSV and verify timestamps and sensor columns/IDs.
+Calibration values can be saved and reloaded, and the UI explains which values are raw versus normalized.
+When hardware is disconnected or data stops arriving, the UI reports the issue rather than silently showing old values as live.
+14. Development Plan
+15. Risks, Dependencies & Open Questions
+16. V1 Definition of Done
+V1 is complete when the user can run NeuroSense locally, view simulated or real sensor readings, see connection health, record a session, persist it in SQLite, reopen it from history, inspect charts, export CSV, and save basic calibration settings. All screens must distinguish real device data from simulation, and the core flow must work without a cloud account.
+Appendix A — Example reading payload
+Illustrative only; the final schema must match the firmware.
+{
+  "timestamp": "2026-10-09T16:30:00.000Z",
+  "source": "simulated",
+  "device_id": "esp32-01",
+  "sensors": [
+    {"id": "fsr_1", "raw": 1847, "filtered": 1762, "normalized": 68.0},
+    {"id": "flex_1", "raw": 2130, "filtered": 2088, "normalized": 42.0}
+  ]
+}
+End of Document
+Field | Definition
+Product | NeuroSense
+Product type | Responsive web application
+Primary users | Project team members, developers, and prototype testers
+Primary objective | Make sensor behaviour visible, recordable, and easy to inspect
+Initial hardware assumption | ESP32 + FSR/flex sensors; exact sensor count and mapping to be confirmed
+Initial deployment | Local development computer / local network
+Data storage | SQLite for the first version
+Document status | Proposed requirements; implementation details can change after hardware validation
+User | Need | Success outcome
+Hardware developer | Check whether each sensor is responding | Can identify flat, disconnected, or unexpected readings quickly
+Prototype tester | Record a test run | Can save and label a session without using a separate logger
+Project reviewer | Inspect an earlier run | Can reopen a session and view its summary and charts
+Future ML developer | Export labelled time-series data | Can obtain clean CSV data with timestamps and sensor columns
+Feature | Priority | V1 acceptance summary
+Dashboard overview | P0 | Shows device state, recording state, latest sensor values, and a live chart
+Live sensor monitor | P0 | Shows per-sensor raw value and configured processed/normalized value where available
+Session recording | P0 | Start/stop recording and persist timestamped readings
+Session history | P0 | List saved sessions and open a session detail view
+CSV export | P0 | Export readings for a selected session
+Simulated data mode | P0 | Dashboard can be developed and demonstrated without hardware
+ESP32 integration | P0 for hardware milestone | Receive validated readings from a documented device protocol
+Calibration workflow | P1 | Capture baseline and reference values and save settings
+Hand/finger visualisation | P1 | Optional visual mapping of configured flex sensors to fingers
+Settings page | P1 | Configure device endpoint, sensor labels, and display preferences
+Comparing sessions | P2 | Overlay two sessions on compatible charts
+Gesture/ML recognition | Out of scope for V1 | Separate future phase after collecting suitable data
+Page | Purpose | Main elements
+Dashboard | At-a-glance status | Device connection, latest readings, recording controls, live chart, alerts
+Live Monitor | Debug sensor inputs | Per-sensor cards, raw/processed values, timestamps, status indicators
+Sessions / History | Find saved recordings | Session list, date/time, duration, sample count, notes, open/export actions
+Session Details | Review a recording | Time-series charts, summary statistics, notes, CSV export
+Calibration | Set reference ranges | Sensor selection, baseline/reference capture, preview, save/reset
+Settings | Configure the app | Device endpoint, sensor names/count, units, sampling display, data retention
+Layer | Technology | Responsibility
+Frontend | React + Vite + Tailwind CSS | Responsive pages, charts, controls, connection state
+Backend API | Python + FastAPI | Device adapter, validation, session management, export endpoints
+Live transport | WebSocket | Push sensor updates to the browser with low latency
+Device link | ESP32 over Wi-Fi; protocol to be confirmed | Publish sensor readings to backend or a device adapter
+Database | SQLite | Persist sessions, readings, sensor configuration, calibration
+Testing mode | Simulated data generator | Provide repeatable readings without connected hardware
+Interface | Purpose
+GET /api/status | Return backend/device status and active data source
+GET /api/sensors | Return configured sensor IDs, names, types, and available value fields
+WS /ws/sensors | Stream validated live readings and connection/status events
+POST /api/sessions | Create/start a recording session
+POST /api/sessions/{id}/stop | Stop and finalize a recording session
+GET /api/sessions | List saved sessions
+GET /api/sessions/{id} | Return session metadata and summary
+GET /api/sessions/{id}/readings | Return recorded readings, with pagination or time-range filtering
+GET /api/sessions/{id}/export.csv | Download session readings as CSV
+GET/PUT /api/calibration | Read/update calibration settings
+Entity | Key fields | Notes
+Sensor | sensor_id, name, type, unit, enabled | Stable ID should not depend on display name
+Reading | timestamp, session_id, sensor_id, raw_value, filtered_value, normalized_value | Only populate fields actually supplied or calculated
+Session | session_id, name, notes, started_at, ended_at, source, sample_count | Source is simulated or hardware
+Calibration | sensor_id, baseline, reference_value, method, updated_at, version | Fields depend on sensor type and calibration approach
+Area | Requirement
+Responsiveness | Primary dashboard remains usable on typical laptop and mobile browser sizes
+Live updates | Target a smooth display around 5–10 UI updates/second initially; underlying acquisition/storage rate is configurable and hardware-dependent
+Reliability | A brief frontend refresh should not erase already persisted session data
+Data integrity | Use timestamps, stable sensor IDs, and explicit missing/stale status
+Performance | Charts should remain responsive for normal prototype sessions; large histories should be loaded in ranges/pages
+Privacy | Store data locally by default; no cloud upload in V1
+Maintainability | Keep device ingestion, storage, and UI concerns separated
+Safety of interpretation | Display engineering measurements only; do not present medical diagnosis or validated health conclusions
+Phase | Deliverable | Definition of done
+Phase 1 — UI skeleton | React/Vite app, navigation, responsive layout, sample sensor cards | Pages render with coherent styling and simulated readings
+Phase 2 — Live simulation | Chart, status states, simulated stream | Values update consistently and mode is clearly labelled
+Phase 3 — Backend + persistence | FastAPI, SQLite schema, session controls | Sessions and timestamped readings persist locally
+Phase 4 — History + export | Session list, detail view, CSV export | Saved session can be reopened and exported
+Phase 5 — Calibration | Calibration screen and stored settings | User can save and reload calibration per sensor
+Phase 6 — ESP32 integration | Validated firmware payload and live device adapter | Real readings flow through the same dashboard pipeline
+Phase 7 — Refinement | Error handling, performance, optional hand visualisation | Acceptance criteria pass in repeatable tests
+Item | Why it matters / decision needed
+Exact sensor setup | Confirm sensor count, types, wiring, ADC ranges, and mapping before finalising UI fields
+Device protocol | Choose whether ESP32 sends HTTP posts, WebSocket/MQTT, or another protocol; avoid committing before firmware review
+Sampling rate | Confirm actual acquisition rate and acceptable storage volume
+Normalization | Define what 0–100% means for each sensor; raw ADC values are not inherently pressure or bend percentages
+Connectivity | Decide whether the backend runs on the same laptop or another local device
+Session size | Estimate expected recording duration and rate to guide storage and chart loading
+Data loss behaviour | Define what happens if Wi-Fi/backend fails during a recording
+Product naming | Confirm brand spelling and whether “NeuroSense” is the final product name
